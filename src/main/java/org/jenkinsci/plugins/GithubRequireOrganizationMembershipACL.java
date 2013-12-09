@@ -101,7 +101,8 @@ public class GithubRequireOrganizationMembershipACL extends ACL {
 					String test = parts[parts.length - 1].toLowerCase();
 
 					if (checkReadPermission(permission)
-							|| testBuildPermission(permission)) {
+							|| testBuildPermission(permission)
+							|| checkCancelPermission(permission)) {
 						// check the permission
 
 						log.finest("Granting READ and BUILD rights to user "
@@ -187,6 +188,14 @@ public class GithubRequireOrganizationMembershipACL extends ACL {
 	private boolean checkReadPermission(Permission permission) {
 		if (permission.getId().equals("hudson.model.Hudson.Read")
 				|| permission.getId().equals("hudson.model.Item.Read")) {
+			return true;
+		} else
+			return false;
+	}
+	
+	private boolean checkCancelPermission(Permission permission) {
+		if (permission.getId().equals("hudson.model.Hudson.Cancel")
+				|| permission.getId().equals("hudson.model.Item.Cancel")) {
 			return true;
 		} else
 			return false;
